@@ -1,4 +1,4 @@
-# LeetTracker
+# Interview Atlas
 
 Interview Atlas is an interactive study guide and progress tracker for coding interview preparation. It groups LeetCode problems by reusable algorithmic pattern, pairs them with recognition cues and implementation templates, and saves completion progress between sessions.
 
