@@ -205,6 +205,228 @@
         font-weight: 800;
       }
 
+      .header-actions {
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .leetcode-sync-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 11px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--card);
+        color: var(--foreground);
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 800;
+        transition:
+          border-color 140ms ease,
+          background 140ms ease;
+      }
+
+      .leetcode-sync-button:hover {
+        border-color: #9ec8ff;
+        background: #edf7ff;
+      }
+
+      .sync-icon {
+        color: var(--primary);
+        font-size: 17px;
+      }
+
+      .sync-dialog {
+        width: calc(100% - 32px);
+        max-width: 530px;
+        max-height: calc(100vh - 32px);
+        margin: auto;
+        padding: 0;
+        overflow: auto;
+        border: 1px solid var(--border);
+        border-radius: 26px;
+        background: var(--card);
+        color: var(--foreground);
+        box-shadow: 0 28px 80px rgba(14, 24, 43, 0.28);
+      }
+
+      .sync-dialog::backdrop {
+        background: rgba(11, 18, 31, 0.52);
+        backdrop-filter: blur(2px);
+      }
+
+      .sync-dialog-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 22px 24px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .sync-dialog-header h2 {
+        margin-top: 3px;
+      }
+
+      .dialog-close {
+        display: grid;
+        width: 36px;
+        height: 36px;
+        flex: 0 0 auto;
+        place-items: center;
+        border: 0;
+        border-radius: 9px;
+        background: transparent;
+        color: var(--muted-foreground);
+        cursor: pointer;
+        font-size: 21px;
+      }
+
+      .dialog-close:hover {
+        background: var(--muted);
+        color: var(--foreground);
+      }
+
+      .sync-dialog-body {
+        padding: 22px 24px 24px;
+      }
+
+      .sync-steps {
+        display: grid;
+        gap: 18px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .sync-step {
+        display: flex;
+        gap: 12px;
+      }
+
+      .sync-step-number {
+        display: grid;
+        width: 28px;
+        height: 28px;
+        flex: 0 0 auto;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--foreground);
+        color: var(--background);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .sync-step-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .sync-step-copy > strong {
+        display: block;
+      }
+
+      .sync-step-copy p {
+        margin: 4px 0 0;
+        color: var(--muted-foreground);
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .sync-export-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 8px;
+        color: var(--primary-dark);
+        font-size: 14px;
+        font-weight: 800;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+
+      kbd {
+        padding: 2px 5px;
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        background: var(--muted);
+        color: var(--foreground);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+      }
+
+      .sync-file-input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+      }
+
+      .sync-file-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin-top: 11px;
+        padding: 10px 14px;
+        border: 0;
+        border-radius: 11px;
+        background: var(--primary);
+        color: white;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .sync-file-button:disabled {
+        cursor: wait;
+        opacity: 0.65;
+      }
+
+      .sync-result {
+        display: none;
+        gap: 10px;
+        margin: 19px 0 0;
+        padding: 13px 14px;
+        border: 1px solid;
+        border-radius: 12px;
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .sync-result.visible {
+        display: flex;
+      }
+
+      .sync-result.success {
+        border-color: #a8e4c3;
+        background: #ebfbf2;
+        color: #135f38;
+      }
+
+      .sync-result.error {
+        border-color: var(--memory-border);
+        background: var(--memory-bg);
+        color: var(--memory-text);
+      }
+
+      .sync-privacy {
+        display: flex;
+        gap: 8px;
+        margin: 19px 0 0;
+        padding-top: 15px;
+        border-top: 1px solid var(--border);
+        color: var(--muted-foreground);
+        font-size: 12px;
+        line-height: 1.55;
+      }
+
       .progress-check {
         color: var(--primary);
       }
@@ -1093,6 +1315,10 @@
           display: none;
         }
 
+        .leetcode-sync-label {
+          display: none;
+        }
+
         .main-content {
           padding: 25px 16px 50px;
         }
@@ -1180,6 +1406,19 @@
           padding-inline: 10px;
         }
 
+        .header-actions {
+          gap: 6px;
+        }
+
+        .leetcode-sync-button {
+          padding-inline: 9px;
+        }
+
+        .sync-dialog-header,
+        .sync-dialog-body {
+          padding-inline: 18px;
+        }
+
         .chapter-icon {
           display: none;
         }
@@ -1238,13 +1477,74 @@
           <button class="clear-search" type="button" aria-label="Clear search">×</button>
         </label>
 
-        <div class="progress-pill" aria-live="polite">
-          <span class="progress-check" aria-hidden="true">●</span>
-          <span id="header-solved">0</span>
-          <span class="progress-total">/ <span id="header-total">0</span> solved</span>
+        <div class="header-actions">
+          <button
+            id="open-sync-dialog"
+            class="leetcode-sync-button"
+            type="button"
+            aria-label="Sync solved problems from LeetCode"
+          >
+            <span class="sync-icon" aria-hidden="true">↻</span>
+            <span class="leetcode-sync-label">Sync LeetCode</span>
+          </button>
+          <div class="progress-pill" aria-live="polite">
+            <span class="progress-check" aria-hidden="true">●</span>
+            <span id="header-solved">0</span>
+            <span class="progress-total">/ <span id="header-total">0</span> solved</span>
+          </div>
         </div>
       </div>
     </header>
+
+    <dialog id="sync-dialog" class="sync-dialog">
+      <div class="sync-dialog-header">
+        <div>
+          <p class="pattern-label">Progress import</p>
+          <h2>Sync from LeetCode</h2>
+        </div>
+        <button id="close-sync-dialog" class="dialog-close" type="button" aria-label="Close LeetCode sync">×</button>
+      </div>
+      <div class="sync-dialog-body">
+        <ol class="sync-steps">
+          <li class="sync-step">
+            <span class="sync-step-number">1</span>
+            <div class="sync-step-copy">
+              <strong>Open your LeetCode progress</strong>
+              <p>Make sure you are logged into LeetCode, then open its JSON progress page.</p>
+              <a
+                class="sync-export-link"
+                href="https://leetcode.com/api/problems/all/"
+                target="_blank"
+                rel="noreferrer"
+              >Open LeetCode export <span aria-hidden="true">↗</span></a>
+            </div>
+          </li>
+          <li class="sync-step">
+            <span class="sync-step-number">2</span>
+            <div class="sync-step-copy">
+              <strong>Save the page as JSON</strong>
+              <p>Press <kbd>⌘S</kbd> on Mac or <kbd>Ctrl+S</kbd> on Windows and keep the <strong>.json</strong> file.</p>
+            </div>
+          </li>
+          <li class="sync-step">
+            <span class="sync-step-number">3</span>
+            <div class="sync-step-copy">
+              <strong>Import it here</strong>
+              <p>Accepted questions in this study plan will be marked solved.</p>
+              <input id="leetcode-file" class="sync-file-input" type="file" accept=".json,application/json" />
+              <button id="choose-leetcode-file" class="sync-file-button" type="button">
+                <span aria-hidden="true">⇧</span> Choose LeetCode JSON
+              </button>
+            </div>
+          </li>
+        </ol>
+        <output id="sync-result" class="sync-result" aria-live="polite"></output>
+        <p class="sync-privacy">
+          <span aria-hidden="true">◆</span>
+          <span>Your LeetCode password and session cookie are never requested. Sync only adds accepted problems; it does not clear manual marks.</span>
+        </p>
+      </div>
+    </dialog>
 
     <div class="app-shell">
       <aside class="sidebar">
@@ -1422,6 +1722,12 @@
         filters: document.querySelector("#filters"),
         searchInputs: [...document.querySelectorAll('.search input[type="search"]')],
         clearButtons: [...document.querySelectorAll(".clear-search")],
+        syncDialog: document.querySelector("#sync-dialog"),
+        openSyncDialog: document.querySelector("#open-sync-dialog"),
+        closeSyncDialog: document.querySelector("#close-sync-dialog"),
+        leetCodeFile: document.querySelector("#leetcode-file"),
+        chooseLeetCodeFile: document.querySelector("#choose-leetcode-file"),
+        syncResult: document.querySelector("#sync-result"),
       };
 
       function loadProgress() {
@@ -1450,6 +1756,50 @@
           localStorage.setItem(storageKey, JSON.stringify([...solvedIds]));
         } catch {
           storageEnabled = false;
+        }
+      }
+
+      async function importLeetCodeProgress(file) {
+        elements.chooseLeetCodeFile.disabled = true;
+        elements.chooseLeetCodeFile.innerHTML = '<span aria-hidden="true">↻</span> Updating progress…';
+        elements.syncResult.className = "sync-result";
+
+        try {
+          const data = JSON.parse(await file.text());
+          if (!Array.isArray(data?.stat_status_pairs)) {
+            throw new Error(
+              "This does not look like a LeetCode progress export. Download the JSON from the link above and try again.",
+            );
+          }
+
+          const acceptedIds = new Set(
+            data.stat_status_pairs
+              .filter((entry) => entry?.status === "ac")
+              .map((entry) => Number(entry.stat?.frontend_question_id))
+              .filter(Number.isInteger),
+          );
+          if (!acceptedIds.size) {
+            throw new Error("No accepted problems were found in this export.");
+          }
+
+          const matchedIds = [...acceptedIds].filter((id) => allProblemIds.has(id));
+          const addedCount = matchedIds.filter((id) => !solvedIds.has(id)).length;
+          matchedIds.forEach((id) => solvedIds.add(id));
+          saveProgress();
+          renderAll();
+
+          elements.syncResult.className = "sync-result success visible";
+          elements.syncResult.textContent = `${matchedIds.length} accepted problems matched this study plan. ${addedCount} newly marked solved.`;
+        } catch (error) {
+          elements.syncResult.className = "sync-result error visible";
+          elements.syncResult.textContent =
+            error instanceof Error
+              ? error.message
+              : "The LeetCode export could not be imported.";
+        } finally {
+          elements.chooseLeetCodeFile.disabled = false;
+          elements.chooseLeetCodeFile.innerHTML = '<span aria-hidden="true">⇧</span> Choose LeetCode JSON';
+          elements.leetCodeFile.value = "";
         }
       }
 
@@ -1709,6 +2059,27 @@
           );
           visibleInput?.focus();
         });
+      });
+
+      elements.openSyncDialog.addEventListener("click", () => {
+        elements.syncDialog.showModal();
+      });
+
+      elements.closeSyncDialog.addEventListener("click", () => {
+        elements.syncDialog.close();
+      });
+
+      elements.syncDialog.addEventListener("click", (event) => {
+        if (event.target === elements.syncDialog) elements.syncDialog.close();
+      });
+
+      elements.chooseLeetCodeFile.addEventListener("click", () => {
+        elements.leetCodeFile.click();
+      });
+
+      elements.leetCodeFile.addEventListener("change", (event) => {
+        const file = event.target.files?.[0];
+        if (file) void importLeetCodeProgress(file);
       });
 
       renderAll();

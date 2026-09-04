@@ -20,6 +20,7 @@ export function ProgressTracker() {
     savingIds,
     setProblemSolved,
     solvedIds,
+    syncAcceptedProblems,
     syncError,
   } = useProgress();
 
@@ -43,6 +44,7 @@ export function ProgressTracker() {
         query={query}
         solvedCount={solvedCount}
         totalCount={totalProblemCount}
+        onLeetCodeSync={syncAcceptedProblems}
         onQueryChange={setQuery}
       />
 

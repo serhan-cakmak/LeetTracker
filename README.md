@@ -15,6 +15,7 @@ Interview Atlas is an interactive study guide and progress tracker for coding in
 - Pattern-based chapters covering core interview topics
 - Pre-problem refreshers with recognition checks, pitfalls, and 65 Python templates
 - Curated problems with difficulty labels, notes, and direct LeetCode links
+- Secure LeetCode progress import that merges accepted problems into the tracker
 - Search and solved/unsolved filters
 - Chapter-level and overall progress tracking
 - Persistent progress with Cloudflare D1 in the full app

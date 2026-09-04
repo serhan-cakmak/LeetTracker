@@ -1,4 +1,5 @@
 import { CheckCircle2, Code2, LoaderCircle, Search, X } from 'lucide-react';
+import { LeetCodeSync } from './leetcode-sync';
 
 type TrackerHeaderProps = {
   isLoading: boolean;
@@ -6,10 +7,14 @@ type TrackerHeaderProps = {
   solvedCount: number;
   totalCount: number;
   onQueryChange: (query: string) => void;
+  onLeetCodeSync: (
+    acceptedIds: number[],
+  ) => Promise<{ addedCount: number; matchedCount: number }>;
 };
 
 export function TrackerHeader({
   isLoading,
+  onLeetCodeSync,
   onQueryChange,
   query,
   solvedCount,
@@ -38,19 +43,22 @@ export function TrackerHeader({
           onQueryChange={onQueryChange}
         />
 
-        <div className="flex shrink-0 items-center gap-2 rounded-full border border-border bg-background px-3 py-2 text-sm font-bold">
-          {isLoading ? (
-            <LoaderCircle size={16} className="animate-spin text-primary" />
-          ) : (
-            <CheckCircle2 size={16} className="text-primary" />
-          )}
-          <span>
-            {solvedCount}
-            <span className="hidden text-muted-foreground sm:inline">
-              {' '}
-              / {totalCount} solved
+        <div className="flex shrink-0 items-center gap-2">
+          <LeetCodeSync onSync={onLeetCodeSync} />
+          <div className="flex items-center gap-2 rounded-full border border-border bg-background px-3 py-2 text-sm font-bold">
+            {isLoading ? (
+              <LoaderCircle size={16} className="animate-spin text-primary" />
+            ) : (
+              <CheckCircle2 size={16} className="text-primary" />
+            )}
+            <span>
+              {solvedCount}
+              <span className="hidden text-muted-foreground sm:inline">
+                {' '}
+                / {totalCount} solved
+              </span>
             </span>
-          </span>
+          </div>
         </div>
       </div>
     </header>

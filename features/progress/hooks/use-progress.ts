@@ -86,6 +86,56 @@ export function useProgress() {
     [],
   );
 
+  const syncAcceptedProblems = useCallback(async (acceptedIds: number[]) => {
+    const matchedIds = [
+      ...new Set(
+        acceptedIds.filter(
+          (questionId) =>
+            Number.isInteger(questionId) && studyProblemIds.has(questionId),
+        ),
+      ),
+    ];
+    const previous = solvedRef.current;
+    const previousSet = new Set(previous);
+    const addedCount = matchedIds.filter(
+      (questionId) => !previousSet.has(questionId),
+    ).length;
+    const next = [...new Set([...previous, ...matchedIds])].sort((a, b) => a - b);
+
+    solvedRef.current = next;
+    setSolvedIds(next);
+    setSavingIds((current) => [...new Set([...current, ...matchedIds])]);
+
+    try {
+      const response = await fetch('/api/progress/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ acceptedIds: matchedIds }),
+      });
+      if (!response.ok) {
+        const body = (await response.json().catch(() => null)) as {
+          error?: string;
+        } | null;
+        throw new Error(body?.error ?? 'LeetCode progress could not be saved.');
+      }
+
+      setSyncError(false);
+      return { addedCount, matchedCount: matchedIds.length };
+    } catch (error) {
+      solvedRef.current = previous;
+      setSolvedIds(previous);
+      setSyncError(true);
+      throw error instanceof Error
+        ? error
+        : new Error('LeetCode progress could not be saved.');
+    } finally {
+      const matchedSet = new Set(matchedIds);
+      setSavingIds((current) =>
+        current.filter((questionId) => !matchedSet.has(questionId)),
+      );
+    }
+  }, []);
+
   useEffect(() => {
     const context = (document as Document & { modelContext?: ModelContext })
       .modelContext;
@@ -167,6 +217,7 @@ export function useProgress() {
     savingIds,
     setProblemSolved,
     solvedIds,
+    syncAcceptedProblems,
     syncError,
   };
 }
