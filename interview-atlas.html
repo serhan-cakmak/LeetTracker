@@ -1,0 +1,1375 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A focused algorithm study guide and coding interview progress tracker."
+    />
+    <title>Interview Atlas</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --background: #f5f7fb;
+        --foreground: #172033;
+        --card: #ffffff;
+        --muted: #f1f3f6;
+        --muted-foreground: #657083;
+        --primary: #2f7eea;
+        --primary-dark: #1f66c7;
+        --accent: #b8ed45;
+        --accent-foreground: #203513;
+        --border: #dde4ee;
+        --sidebar: #edf2f8;
+        --sidebar-primary: #202b40;
+        --easy-bg: #dff8ea;
+        --easy-text: #17613c;
+        --medium-bg: #fff0c5;
+        --medium-text: #815300;
+        --hard-bg: #ffe1e6;
+        --hard-text: #91253a;
+        --memory-bg: #fff3f4;
+        --memory-border: #ffc8d0;
+        --memory-text: #6f1d2e;
+        --radius: 14px;
+        --shadow: 0 16px 50px rgba(25, 42, 76, 0.07);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--background);
+        color: var(--foreground);
+        font-family:
+          Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      button,
+      a,
+      input[type="checkbox"] {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      button {
+        color: inherit;
+      }
+
+      button:focus-visible,
+      a:focus-visible,
+      input:focus-visible {
+        outline: 3px solid rgba(47, 126, 234, 0.3);
+        outline-offset: 2px;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .app-header {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        min-height: 65px;
+        padding: 12px 28px;
+        border-bottom: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(12px);
+      }
+
+      .header-inner {
+        display: flex;
+        max-width: 1500px;
+        margin: 0 auto;
+        align-items: center;
+        justify-content: space-between;
+        gap: 22px;
+      }
+
+      .brand {
+        display: flex;
+        min-width: 0;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 40px;
+        height: 40px;
+        flex: 0 0 auto;
+        place-items: center;
+        border-radius: 12px;
+        background: var(--primary);
+        color: white;
+        box-shadow: 0 8px 22px rgba(47, 126, 234, 0.24);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-weight: 800;
+        letter-spacing: -2px;
+      }
+
+      .brand-title {
+        overflow: hidden;
+        margin: 0;
+        font-size: 18px;
+        font-weight: 800;
+        line-height: 1.1;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .brand-subtitle {
+        margin: 4px 0 0;
+        color: var(--muted-foreground);
+        font-size: 12px;
+      }
+
+      .search {
+        display: flex;
+        width: min(100%, 450px);
+        align-items: center;
+        gap: 9px;
+        padding: 9px 12px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--background);
+        box-shadow: inset 0 1px 2px rgba(23, 32, 51, 0.04);
+      }
+
+      .search-icon {
+        color: var(--muted-foreground);
+        font-size: 17px;
+      }
+
+      .search input {
+        width: 100%;
+        min-width: 0;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        color: var(--foreground);
+        font-size: 14px;
+      }
+
+      .search input::placeholder {
+        color: #8a94a5;
+      }
+
+      .clear-search {
+        display: none;
+        border: 0;
+        background: transparent;
+        color: var(--muted-foreground);
+        cursor: pointer;
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      .clear-search.visible {
+        display: block;
+      }
+
+      .progress-pill {
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 12px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--background);
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .progress-check {
+        color: var(--primary);
+      }
+
+      .progress-total {
+        color: var(--muted-foreground);
+      }
+
+      .app-shell {
+        display: grid;
+        max-width: 1500px;
+        min-height: calc(100vh - 65px);
+        margin: 0 auto;
+        grid-template-columns: 290px minmax(0, 1fr);
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 65px;
+        height: calc(100vh - 65px);
+        overflow-y: auto;
+        padding: 27px 20px;
+        border-right: 1px solid var(--border);
+        background: var(--sidebar);
+      }
+
+      .section-label-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+
+      .eyebrow {
+        margin: 0;
+        color: var(--muted-foreground);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .chapter-number {
+        color: var(--muted-foreground);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 12px;
+      }
+
+      .chapter-nav {
+        display: grid;
+        gap: 4px;
+      }
+
+      .chapter-button {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        gap: 11px;
+        padding: 10px 12px;
+        border: 0;
+        border-radius: 12px;
+        background: transparent;
+        cursor: pointer;
+        text-align: left;
+        transition:
+          background 150ms ease,
+          color 150ms ease,
+          transform 150ms ease;
+      }
+
+      .chapter-button:hover {
+        background: rgba(255, 255, 255, 0.75);
+      }
+
+      .chapter-button.active {
+        background: var(--sidebar-primary);
+        color: white;
+        box-shadow: 0 4px 12px rgba(31, 43, 65, 0.12);
+      }
+
+      .chapter-button:active {
+        transform: translateY(1px);
+      }
+
+      .chapter-icon {
+        display: grid;
+        width: 20px;
+        flex: 0 0 auto;
+        place-items: center;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .chapter-title-short {
+        min-width: 0;
+        flex: 1;
+        overflow: hidden;
+        font-size: 14px;
+        font-weight: 700;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .chapter-count {
+        color: var(--muted-foreground);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 12px;
+      }
+
+      .chapter-button.active .chapter-count {
+        color: rgba(255, 255, 255, 0.67);
+      }
+
+      .overall-card {
+        margin-top: 24px;
+        padding: 16px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: var(--card);
+      }
+
+      .overall-top {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+      }
+
+      .overall-percent {
+        margin: 6px 0 0;
+        font-size: 30px;
+        font-weight: 850;
+        line-height: 1;
+      }
+
+      .overall-count {
+        margin: 0;
+        color: var(--muted-foreground);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 12px;
+      }
+
+      .progress-track {
+        height: 8px;
+        margin-top: 14px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: var(--muted);
+      }
+
+      .progress-bar {
+        height: 100%;
+        border-radius: inherit;
+        background: var(--primary);
+        transition: width 250ms ease;
+      }
+
+      .overall-copy,
+      .storage-note {
+        color: var(--muted-foreground);
+        font-size: 12px;
+        line-height: 1.55;
+      }
+
+      .overall-copy {
+        margin: 13px 0 0;
+      }
+
+      .storage-note {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin: 12px 0 0;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+      }
+
+      .storage-dot {
+        width: 7px;
+        height: 7px;
+        flex: 0 0 auto;
+        border-radius: 50%;
+        background: #35ad67;
+      }
+
+      .storage-note.unsaved .storage-dot {
+        background: #d28b16;
+      }
+
+      .main-content {
+        min-width: 0;
+        padding: 38px 48px 70px;
+      }
+
+      .content-inner {
+        max-width: 1040px;
+        margin: 0 auto;
+      }
+
+      .mobile-search {
+        display: none;
+      }
+
+      .chapter-heading {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 27px;
+      }
+
+      .pattern-label {
+        margin: 0 0 8px;
+        color: var(--primary);
+        font-size: 12px;
+        font-weight: 850;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 780px;
+        margin: 0;
+        font-size: clamp(36px, 5vw, 50px);
+        font-weight: 850;
+        letter-spacing: -0.045em;
+        line-height: 1.03;
+      }
+
+      .chapter-badges {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .badge-box {
+        padding: 8px 12px;
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        background: var(--card);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 14px;
+      }
+
+      .badge-box.accent {
+        border-color: transparent;
+        background: var(--accent);
+        color: var(--accent-foreground);
+        font-weight: 800;
+      }
+
+      .guide-card {
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        background: var(--card);
+        box-shadow: var(--shadow);
+      }
+
+      .guide-top {
+        display: grid;
+        gap: 28px;
+        padding: 31px;
+        border-bottom: 1px solid var(--border);
+        grid-template-columns: 1.15fr 0.85fr;
+      }
+
+      .chapter-intro {
+        margin: 0;
+        color: var(--muted-foreground);
+        font-size: 18px;
+        line-height: 1.7;
+      }
+
+      .core-idea {
+        margin-top: 22px;
+        padding-left: 16px;
+        border-left: 2px solid var(--primary);
+      }
+
+      .core-idea p:last-child {
+        margin: 3px 0 0;
+        line-height: 1.65;
+      }
+
+      .cues {
+        padding: 21px;
+        border-radius: 18px;
+        background: var(--foreground);
+        color: var(--background);
+      }
+
+      .cues .eyebrow {
+        margin-bottom: 14px;
+        color: #7fd0ff;
+      }
+
+      .cues ul {
+        display: grid;
+        gap: 11px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .cues li {
+        display: flex;
+        gap: 11px;
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .cue-dot {
+        width: 6px;
+        height: 6px;
+        flex: 0 0 auto;
+        margin-top: 8px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+
+      .code-block {
+        background: #10141c;
+        color: #cbd5e1;
+      }
+
+      .code-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 11px 27px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .code-heading .eyebrow {
+        color: #95a1b5;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        letter-spacing: 0.08em;
+      }
+
+      .traffic-lights {
+        display: flex;
+        gap: 6px;
+      }
+
+      .traffic-lights span {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+
+      .traffic-lights span:nth-child(1) {
+        background: #fb7185;
+      }
+
+      .traffic-lights span:nth-child(2) {
+        background: #fcd34d;
+      }
+
+      .traffic-lights span:nth-child(3) {
+        background: #34d399;
+      }
+
+      pre {
+        margin: 0;
+        overflow-x: auto;
+        padding: 25px 27px 29px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 14px;
+        line-height: 1.9;
+      }
+
+      .practice {
+        margin-top: 36px;
+      }
+
+      .practice-heading {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 18px;
+      }
+
+      h2 {
+        margin: 4px 0 0;
+        font-size: 26px;
+        letter-spacing: -0.025em;
+      }
+
+      .difficulty-summary {
+        margin: 3px 0 0;
+        color: var(--muted-foreground);
+        font-size: 14px;
+      }
+
+      .filters {
+        display: flex;
+        padding: 4px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--card);
+      }
+
+      .filter-button {
+        padding: 6px 12px;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        color: var(--muted-foreground);
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 750;
+        text-transform: capitalize;
+      }
+
+      .filter-button:hover {
+        color: var(--foreground);
+      }
+
+      .filter-button.active {
+        background: var(--foreground);
+        color: var(--background);
+      }
+
+      .problem-list {
+        margin-top: 17px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: var(--card);
+        box-shadow: 0 2px 7px rgba(23, 32, 51, 0.03);
+      }
+
+      .problem-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--border);
+        transition: background 130ms ease;
+      }
+
+      .problem-row:last-child {
+        border-bottom: 0;
+      }
+
+      .problem-row:hover {
+        background: rgba(241, 243, 246, 0.62);
+      }
+
+      .problem-checkbox {
+        width: 18px;
+        height: 18px;
+        flex: 0 0 auto;
+        margin-top: 3px;
+        accent-color: var(--primary);
+        cursor: pointer;
+      }
+
+      .problem-id {
+        width: 42px;
+        flex: 0 0 auto;
+        padding-top: 1px;
+        color: var(--muted-foreground);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 14px;
+      }
+
+      .problem-copy {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .problem-link {
+        color: var(--foreground);
+        font-weight: 750;
+        text-decoration: none;
+        text-underline-offset: 4px;
+      }
+
+      .problem-link:hover {
+        text-decoration: underline;
+      }
+
+      .problem-row.solved .problem-link {
+        color: var(--muted-foreground);
+        text-decoration: line-through;
+      }
+
+      .external-arrow {
+        display: inline-block;
+        margin-left: 5px;
+        color: var(--muted-foreground);
+        font-size: 12px;
+        text-decoration: none;
+      }
+
+      .problem-note {
+        margin: 5px 0 0;
+        color: var(--muted-foreground);
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .technique {
+        color: #4c5668;
+        font-weight: 750;
+      }
+
+      .memory-cue {
+        margin: 9px 0 0;
+        padding: 8px 11px;
+        border: 1px solid var(--memory-border);
+        border-radius: 9px;
+        background: var(--memory-bg);
+        color: var(--memory-text);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .memory-label {
+        margin-right: 8px;
+        color: #ae3450;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        font-weight: 850;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .problem-badges {
+        display: flex;
+        flex: 0 0 auto;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 6px;
+      }
+
+      .pill {
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      .pill.easy {
+        background: var(--easy-bg);
+        color: var(--easy-text);
+      }
+
+      .pill.medium {
+        background: var(--medium-bg);
+        color: var(--medium-text);
+      }
+
+      .pill.hard,
+      .pill.specific {
+        background: var(--hard-bg);
+        color: var(--hard-text);
+      }
+
+      .empty-state {
+        padding: 48px 20px;
+        text-align: center;
+      }
+
+      .empty-icon {
+        color: var(--muted-foreground);
+        font-size: 24px;
+      }
+
+      .empty-title {
+        margin: 9px 0 0;
+        font-weight: 750;
+      }
+
+      .empty-copy {
+        margin: 3px 0 0;
+        color: var(--muted-foreground);
+        font-size: 14px;
+      }
+
+      @media (max-width: 980px) {
+        .app-header {
+          padding-inline: 18px;
+        }
+
+        .app-shell {
+          grid-template-columns: minmax(0, 1fr);
+        }
+
+        .sidebar {
+          position: static;
+          height: auto;
+          overflow: visible;
+          padding: 18px 17px 13px;
+          border-right: 0;
+          border-bottom: 1px solid var(--border);
+        }
+
+        .chapter-nav {
+          display: flex;
+          margin-inline: -3px;
+          overflow-x: auto;
+          padding: 3px 3px 8px;
+          scrollbar-width: thin;
+        }
+
+        .chapter-button {
+          width: auto;
+          min-width: max-content;
+        }
+
+        .overall-card {
+          display: none;
+        }
+
+        .main-content {
+          padding: 30px 28px 60px;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .app-header {
+          padding: 10px 14px;
+        }
+
+        .header-search {
+          display: none;
+        }
+
+        .brand-subtitle,
+        .progress-total {
+          display: none;
+        }
+
+        .main-content {
+          padding: 25px 16px 50px;
+        }
+
+        .mobile-search {
+          display: flex;
+          width: 100%;
+          margin-bottom: 24px;
+        }
+
+        .chapter-heading {
+          align-items: flex-start;
+        }
+
+        h1 {
+          font-size: clamp(34px, 11vw, 45px);
+        }
+
+        .guide-top {
+          grid-template-columns: 1fr;
+          padding: 22px;
+        }
+
+        .chapter-intro {
+          font-size: 16px;
+        }
+
+        .code-heading,
+        pre {
+          padding-inline: 21px;
+        }
+
+        .practice-heading {
+          align-items: flex-start;
+        }
+
+        .problem-row {
+          padding: 15px 14px;
+        }
+
+        .problem-id {
+          width: 34px;
+        }
+
+        .problem-badges {
+          display: none;
+        }
+      }
+
+      @media (max-width: 430px) {
+        .brand-mark {
+          width: 36px;
+          height: 36px;
+        }
+
+        .brand-title {
+          font-size: 16px;
+        }
+
+        .progress-pill {
+          padding-inline: 10px;
+        }
+
+        .chapter-icon {
+          display: none;
+        }
+
+        .chapter-button {
+          gap: 8px;
+        }
+
+        .filters {
+          width: 100%;
+        }
+
+        .filter-button {
+          flex: 1;
+        }
+
+        .problem-row {
+          gap: 10px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="header-inner">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">&lt;/&gt;</span>
+          <div>
+            <p class="brand-title">Interview Atlas</p>
+            <p class="brand-subtitle">Your algorithm field guide</p>
+          </div>
+        </div>
+
+        <label class="search header-search">
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <span class="sr-only">Search current chapter</span>
+          <input
+            id="desktop-search"
+            type="search"
+            placeholder="Search this chapter"
+            autocomplete="off"
+          />
+          <button class="clear-search" type="button" aria-label="Clear search">×</button>
+        </label>
+
+        <div class="progress-pill" aria-live="polite">
+          <span class="progress-check" aria-hidden="true">●</span>
+          <span id="header-solved">0</span>
+          <span class="progress-total">/ <span id="header-total">0</span> solved</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="section-label-row">
+          <p class="eyebrow">Study chapters</p>
+          <span id="chapter-total" class="chapter-number">00</span>
+        </div>
+        <nav id="chapter-nav" class="chapter-nav" aria-label="Study chapters"></nav>
+
+        <div class="overall-card">
+          <div class="overall-top">
+            <div>
+              <p class="eyebrow">Overall progress</p>
+              <p id="overall-percent" class="overall-percent">0%</p>
+            </div>
+            <p id="overall-count" class="overall-count">0/0</p>
+          </div>
+          <div
+            class="progress-track"
+            role="progressbar"
+            aria-label="Overall study progress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
+            <div id="progress-bar" class="progress-bar"></div>
+          </div>
+          <p class="overall-copy">
+            Complete each chapter, then revisit the hard problems without notes.
+          </p>
+          <p id="storage-note" class="storage-note">
+            <span class="storage-dot" aria-hidden="true"></span>
+            <span>Progress is saved in this browser.</span>
+          </p>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <div class="content-inner">
+          <label class="search mobile-search">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <span class="sr-only">Search current chapter</span>
+            <input
+              id="mobile-search"
+              type="search"
+              placeholder="Search this chapter"
+              autocomplete="off"
+            />
+            <button class="clear-search" type="button" aria-label="Clear search">×</button>
+          </label>
+
+          <div class="chapter-heading">
+            <div>
+              <p id="pattern-label" class="pattern-label"></p>
+              <h1 id="chapter-title"></h1>
+            </div>
+            <div class="chapter-badges">
+              <span id="complexity" class="badge-box"></span>
+              <span id="chapter-progress" class="badge-box accent"></span>
+            </div>
+          </div>
+
+          <article class="guide-card">
+            <div class="guide-top">
+              <div>
+                <p id="chapter-intro" class="chapter-intro"></p>
+                <div class="core-idea">
+                  <p class="pattern-label">Core idea</p>
+                  <p id="chapter-insight"></p>
+                </div>
+              </div>
+              <div class="cues">
+                <p class="eyebrow">Recognition cues</p>
+                <ul id="chapter-cues"></ul>
+              </div>
+            </div>
+            <div class="code-block">
+              <div class="code-heading">
+                <p id="template-title" class="eyebrow"></p>
+                <div class="traffic-lights" aria-hidden="true">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+              <pre><code id="chapter-code"></code></pre>
+            </div>
+          </article>
+
+          <section class="practice" aria-labelledby="practice-heading">
+            <div class="practice-heading">
+              <div>
+                <p class="eyebrow">Practice set</p>
+                <h2 id="practice-heading">Problems to master</h2>
+                <p id="difficulty-summary" class="difficulty-summary"></p>
+              </div>
+              <div id="filters" class="filters" role="tablist" aria-label="Problem status">
+                <button class="filter-button active" type="button" role="tab" data-filter="all" aria-selected="true">All</button>
+                <button class="filter-button" type="button" role="tab" data-filter="unsolved" aria-selected="false">Unsolved</button>
+                <button class="filter-button" type="button" role="tab" data-filter="solved" aria-selected="false">Solved</button>
+              </div>
+            </div>
+            <div id="problem-list" class="problem-list"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const chapters = [{"id":"arrays","pattern":"01","title":"Arrays, Hashing & Prefix Sums","shortTitle":"Arrays & Hashing","complexity":"O(n)","intro":"Hash maps and prefix sums are the core tools for remembering what happened earlier. They replace repeated scans with a compact lookup or a reusable cumulative total.","cues":["Frequency, duplicate, or complement lookup","Subarray sum or balance condition","Group by a normalized signature","Need to reuse information from earlier indices"],"insight":"Store the smallest fact that makes the next step immediate: an index, a count, a signature, or the first position where a prefix value appeared.","templateTitle":"Prefix sum + first occurrence","code":"first = {0: -1}\nprefix = 0\nfor i, x in enumerate(nums):\n    prefix += transform(x)\n    if prefix in first:\n        answer = max(answer, i - first[prefix])\n    else:\n        first[prefix] = i","problems":[{"id":1,"title":"Two Sum","difficulty":"Easy","slug":"two-sum","note":"The one foundational easy: check the complement before storing the value."},{"id":49,"title":"Group Anagrams","difficulty":"Medium","slug":"group-anagrams","note":"Use a sorted word or a 26-count tuple as the hash key."},{"id":128,"title":"Longest Consecutive Sequence","difficulty":"Medium","slug":"longest-consecutive-sequence","note":"Only grow sequences from values with no predecessor."},{"id":238,"title":"Product of Array Except Self","difficulty":"Medium","slug":"product-of-array-except-self","note":"Combine prefix and suffix products without division."},{"id":36,"title":"Valid Sudoku","difficulty":"Medium","slug":"valid-sudoku","note":"Track row, column, and box constraints independently."},{"id":560,"title":"Subarray Sum Equals K","difficulty":"Medium","slug":"subarray-sum-equals-k","note":"Count earlier prefix sums equal to current minus k."},{"id":523,"title":"Continuous Subarray Sum","difficulty":"Medium","slug":"continuous-subarray-sum","note":"Equal prefix remainders reveal a divisible subarray."},{"id":219,"title":"Contains Duplicate II","difficulty":"Easy","slug":"contains-duplicate-ii","note":"Store the most recent index, or maintain a size-k window set."},{"id":380,"title":"Insert Delete GetRandom O(1)","difficulty":"Medium","slug":"insert-delete-getrandom-o1","note":"Combine an array for random access with a value-to-index hash map.","memoryCue":"For O(1) deletion, swap the target with the array tail, update that index in the map, then pop."},{"id":41,"title":"First Missing Positive","difficulty":"Hard","slug":"first-missing-positive","note":"Place each positive value at its matching array index in-place.","memoryCue":"Cyclic placement: keep swapping x into index x - 1, then scan for the first mismatch."}]},{"id":"two-pointers","pattern":"02","title":"Two Pointers & Sliding Windows","shortTitle":"Pointers & Windows","complexity":"O(n)","intro":"Two pointers shrink a pairwise search, while a sliding window maintains facts about a contiguous range. Both work because pointer movement permanently rules out possibilities.","cues":["Sorted input and a pair or triplet target","Longest or shortest valid substring","Contiguous range with a frequency constraint","A left boundary can repair an invalid range"],"insight":"For two pointers, move the side that limits improvement. For a window, expand to discover and shrink only until the invariant becomes valid again.","templateTitle":"Variable sliding window","code":"left = 0\nfor right, x in enumerate(items):\n    add(x)\n    while window_is_invalid():\n        remove(items[left])\n        left += 1\n    answer = best(answer, right - left + 1)","problems":[{"id":167,"title":"Two Sum II — Input Array Is Sorted","difficulty":"Medium","slug":"two-sum-ii-input-array-is-sorted","note":"Move the low or high pointer according to the current sum."},{"id":125,"title":"Valid Palindrome","difficulty":"Easy","slug":"valid-palindrome","note":"Move inward while skipping non-alphanumeric characters."},{"id":88,"title":"Merge Sorted Array","difficulty":"Easy","slug":"merge-sorted-array","note":"Fill nums1 from the back so unread values are never overwritten."},{"id":27,"title":"Remove Element","difficulty":"Easy","slug":"remove-element","note":"Use one pointer to scan and one to write retained values."},{"id":75,"title":"Sort Colors","difficulty":"Medium","slug":"sort-colors","note":"Partition zeros, unknown values, and twos with three pointers.","memoryCue":"Dutch national flag: low is the next zero, mid scans, and high is the next two; recheck mid after swapping with high."},{"id":31,"title":"Next Permutation","difficulty":"Medium","slug":"next-permutation","note":"Find the rightmost ascent, swap with the next larger suffix value, then reverse the suffix.","memoryCue":"Three steps: find the pivot from the right, swap with the rightmost larger value, then reverse everything after the pivot."},{"id":15,"title":"3Sum","difficulty":"Medium","slug":"3sum","note":"Sort, fix one number, then run a duplicate-aware pair search."},{"id":11,"title":"Container With Most Water","difficulty":"Medium","slug":"container-with-most-water","note":"Move the shorter wall because it limits the area."},{"id":42,"title":"Trapping Rain Water","difficulty":"Hard","slug":"trapping-rain-water","note":"Advance the side with the smaller maximum boundary.","memoryCue":"Two pointers: the smaller side is already bounded, so its trapped water can be finalized."},{"id":3,"title":"Longest Substring Without Repeating Characters","difficulty":"Medium","slug":"longest-substring-without-repeating-characters","note":"Jump the left edge past the previous occurrence."},{"id":424,"title":"Longest Repeating Character Replacement","difficulty":"Medium","slug":"longest-repeating-character-replacement","note":"Window cost is length minus the most frequent character."},{"id":567,"title":"Permutation in String","difficulty":"Medium","slug":"permutation-in-string","note":"Compare fixed-window character counts."},{"id":438,"title":"Find All Anagrams in a String","difficulty":"Medium","slug":"find-all-anagrams-in-a-string","note":"Maintain the deficit of the fixed-size window."},{"id":209,"title":"Minimum Size Subarray Sum","difficulty":"Medium","slug":"minimum-size-subarray-sum","note":"Shrink positive-number windows as soon as the target is reached."},{"id":76,"title":"Minimum Window Substring","difficulty":"Hard","slug":"minimum-window-substring","note":"Track how many required character counts are fully satisfied."},{"id":239,"title":"Sliding Window Maximum","difficulty":"Hard","slug":"sliding-window-maximum","note":"Keep useful candidates in a decreasing deque.","memoryCue":"Monotonic deque: remove smaller values from the back and expired indices from the front."}]},{"id":"stack","pattern":"03","title":"Stacks & Monotonic Order","shortTitle":"Stacks","complexity":"O(n)","intro":"A stack holds unfinished work in last-in, first-out order. A monotonic stack additionally discards items that can never influence a future answer.","cues":["Nested pairs, decoding, or expression evaluation","Next greater or smaller value","Nearest boundary on either side","Undo or reverse-order processing"],"insight":"Each index enters and leaves a monotonic stack at most once, so a loop with repeated pops is still linear overall.","templateTitle":"Next greater element","code":"stack = []\nfor i, x in enumerate(nums):\n    while stack and nums[stack[-1]] < x:\n        j = stack.pop()\n        answer[j] = i - j\n    stack.append(i)","problems":[{"id":20,"title":"Valid Parentheses","difficulty":"Easy","slug":"valid-parentheses","note":"The only easy here: establish the matching-stack invariant."},{"id":155,"title":"Min Stack","difficulty":"Medium","slug":"min-stack","note":"Store the running minimum beside every pushed value."},{"id":150,"title":"Evaluate Reverse Polish Notation","difficulty":"Medium","slug":"evaluate-reverse-polish-notation","note":"Operands wait on the stack until an operator arrives."},{"id":394,"title":"Decode String","difficulty":"Medium","slug":"decode-string","note":"Save the outer string and repeat count at every opening bracket."},{"id":735,"title":"Asteroid Collision","difficulty":"Medium","slug":"asteroid-collision","note":"Only a right-moving stack top can collide with a new left mover."},{"id":739,"title":"Daily Temperatures","difficulty":"Medium","slug":"daily-temperatures","note":"Keep unresolved days in decreasing temperature order."},{"id":503,"title":"Next Greater Element II","difficulty":"Medium","slug":"next-greater-element-ii","note":"Run a decreasing stack across two passes of the circular array.","memoryCue":"Circular monotonic stack: iterate through 2n with i % n, but only push indices during the first pass."},{"id":402,"title":"Remove K Digits","difficulty":"Medium","slug":"remove-k-digits","note":"Pop larger preceding digits while removals remain, then trim leading zeros.","memoryCue":"Greedy monotonic stack: the earliest possible decrease matters most; remove leftover digits from the end."},{"id":316,"title":"Remove Duplicate Letters","difficulty":"Medium","slug":"remove-duplicate-letters","note":"Use last occurrence, an in-stack set, and an increasing result stack.","memoryCue":"Pop a larger letter only if it appears again later; every letter must remain exactly once."},{"id":901,"title":"Online Stock Span","difficulty":"Medium","slug":"online-stock-span","note":"Compress dominated prices together with their spans."},{"id":853,"title":"Car Fleet","difficulty":"Medium","slug":"car-fleet","note":"Sort by position and merge cars whose arrival time cannot overtake."},{"id":84,"title":"Largest Rectangle in Histogram","difficulty":"Hard","slug":"largest-rectangle-in-histogram","note":"Popping reveals the first smaller boundary on the right.","memoryCue":"Increasing stack of start-index and height; when lower arrives, pop and extend its start left."},{"id":85,"title":"Maximal Rectangle","difficulty":"Hard","slug":"maximal-rectangle","note":"Turn every matrix row into a running histogram.","memoryCue":"Convert each row to histogram heights, then reuse Largest Rectangle in Histogram exactly."}]},{"id":"binary-search","pattern":"04","title":"Binary Search","shortTitle":"Binary Search","complexity":"O(log n)","intro":"Binary search works on any monotonic answer space, not just a sorted array. Define a yes/no predicate whose answer changes at one boundary.","cues":["Sorted or rotated values","First or last valid position","Minimum feasible capacity, time, or speed","A condition changes from false to true once"],"insight":"Define the predicate first. Then decide whether the target is the first true value or the last false value and preserve that boundary invariant.","templateTitle":"Find first feasible value","code":"lo, hi = minimum, maximum\nwhile lo < hi:\n    mid = (lo + hi) // 2\n    if feasible(mid):\n        hi = mid\n    else:\n        lo = mid + 1\nreturn lo","problems":[{"id":704,"title":"Binary Search","difficulty":"Easy","slug":"binary-search","note":"Use this once to make boundary updates automatic."},{"id":33,"title":"Search in Rotated Sorted Array","difficulty":"Medium","slug":"search-in-rotated-sorted-array","note":"One side of the midpoint is always normally sorted."},{"id":153,"title":"Find Minimum in Rotated Sorted Array","difficulty":"Medium","slug":"find-minimum-in-rotated-sorted-array","note":"Compare the midpoint to the right boundary."},{"id":34,"title":"Find First and Last Position of Element","difficulty":"Medium","slug":"find-first-and-last-position-of-element-in-sorted-array","note":"Run two boundary searches instead of expanding from one match."},{"id":74,"title":"Search a 2D Matrix","difficulty":"Medium","slug":"search-a-2d-matrix","note":"Treat the rectangular matrix as one sorted sequence."},{"id":875,"title":"Koko Eating Bananas","difficulty":"Medium","slug":"koko-eating-bananas","note":"Search for the minimum speed that finishes on time."},{"id":162,"title":"Find Peak Element","difficulty":"Medium","slug":"find-peak-element","note":"Compare mid with mid + 1 and keep the side that still rises toward a peak.","memoryCue":"Binary-search the slope: rising means a peak exists to the right; falling means one exists at mid or left."},{"id":1011,"title":"Capacity To Ship Packages Within D Days","difficulty":"Medium","slug":"capacity-to-ship-packages-within-d-days","note":"Capacity is the answer space; simulation is the predicate."},{"id":410,"title":"Split Array Largest Sum","difficulty":"Hard","slug":"split-array-largest-sum","note":"Search the smallest maximum part sum that allows enough splits."},{"id":4,"title":"Median of Two Sorted Arrays","difficulty":"Hard","slug":"median-of-two-sorted-arrays","note":"Binary-search the partition of the smaller array.","memoryCue":"Partition the smaller array so left halves contain half the values and both cross-boundaries are ordered."}]},{"id":"linked-lists","pattern":"05","title":"Linked Lists & Pointer Rewiring","shortTitle":"Linked Lists","complexity":"O(n)","intro":"Linked-list questions are pointer choreography. Draw the links, save the next node before rewiring, and use dummy nodes when the real head may change.","cues":["Reverse, rotate, or reorder nodes","Detect a cycle or intersection","Merge sorted chains","Find the middle or k-th node from the end"],"insight":"Fast and slow pointers reveal distance relationships without extra memory. A dummy head removes most edge cases around insertion and deletion.","templateTitle":"Iterative reversal","code":"prev, curr = None, head\nwhile curr:\n    nxt = curr.next\n    curr.next = prev\n    prev = curr\n    curr = nxt\nreturn prev","problems":[{"id":206,"title":"Reverse Linked List","difficulty":"Easy","slug":"reverse-linked-list","note":"Save next before reversing the current link."},{"id":141,"title":"Linked List Cycle","difficulty":"Easy","slug":"linked-list-cycle","note":"A fast pointer eventually catches a slow pointer inside a cycle."},{"id":142,"title":"Linked List Cycle II","difficulty":"Medium","slug":"linked-list-cycle-ii","note":"After fast meets slow, reset one pointer to head and advance both one step.","memoryCue":"Floyd phase two: head-to-entry distance equals meeting-point-to-entry distance around the cycle."},{"id":146,"title":"LRU Cache","difficulty":"Medium","slug":"lru-cache","note":"Combine a hash map with a doubly linked list ordered by recency.","memoryCue":"Map gives O(1) node access; a dummy-ended doubly linked list gives O(1) removal and move-to-most-recent."},{"id":2,"title":"Add Two Numbers","difficulty":"Medium","slug":"add-two-numbers","note":"Carry arithmetic while building a fresh result chain."},{"id":19,"title":"Remove Nth Node From End of List","difficulty":"Medium","slug":"remove-nth-node-from-end-of-list","note":"Create a fixed gap between two pointers."},{"id":92,"title":"Reverse Linked List II","difficulty":"Medium","slug":"reverse-linked-list-ii","note":"Reverse exactly one segment while preserving both boundary links."},{"id":138,"title":"Copy List with Random Pointer","difficulty":"Medium","slug":"copy-list-with-random-pointer","note":"Map originals to copies or interleave copied nodes."},{"id":143,"title":"Reorder List","difficulty":"Medium","slug":"reorder-list","note":"Find the middle, reverse the second half, then weave."},{"id":25,"title":"Reverse Nodes in k-Group","difficulty":"Hard","slug":"reverse-nodes-in-k-group","note":"Reverse only after confirming that a full group remains.","memoryCue":"Find the k-th node first, save groupNext, reverse until it, then reconnect both boundaries."}]},{"id":"intervals","pattern":"06","title":"Intervals & Sweep Lines","shortTitle":"Intervals","complexity":"O(n log n)","intro":"Interval problems become orderly after sorting by a boundary. Then each interval only needs to be compared with the current merged range or the next event in time.","cues":["Overlapping ranges or schedules","Minimum rooms or simultaneous events","Insert, merge, or remove ranges","Coverage changes at start and end points"],"insight":"Sorting creates local structure. For overlap counts, convert intervals into start/end events; for merging, keep one current range and extend or flush it.","templateTitle":"Merge sorted intervals","code":"intervals.sort()\nmerged = []\nfor start, end in intervals:\n    if not merged or start > merged[-1][1]:\n        merged.append([start, end])\n    else:\n        merged[-1][1] = max(merged[-1][1], end)","problems":[{"id":57,"title":"Insert Interval","difficulty":"Medium","slug":"insert-interval","note":"Emit ranges before, merge overlaps, then emit ranges after."},{"id":56,"title":"Merge Intervals","difficulty":"Medium","slug":"merge-intervals","note":"Sort by start and maintain one active merged interval."},{"id":435,"title":"Non-overlapping Intervals","difficulty":"Medium","slug":"non-overlapping-intervals","note":"Keep the interval that ends earliest."},{"id":1094,"title":"Car Pooling","difficulty":"Medium","slug":"car-pooling","note":"Turn each trip into pickup and drop-off events, then scan passenger load.","memoryCue":"Difference array or sorted events: add at pickup, subtract at drop-off, and prefix-sum active passengers."},{"id":986,"title":"Interval List Intersections","difficulty":"Medium","slug":"interval-list-intersections","note":"Advance the interval whose end is smaller."},{"id":2406,"title":"Divide Intervals Into Minimum Number of Groups","difficulty":"Medium","slug":"divide-intervals-into-minimum-number-of-groups","note":"Maximum overlap equals the minimum number of groups."},{"id":1288,"title":"Remove Covered Intervals","difficulty":"Medium","slug":"remove-covered-intervals","note":"Sort equal starts by longer end first."},{"id":1851,"title":"Minimum Interval to Include Each Query","difficulty":"Hard","slug":"minimum-interval-to-include-each-query","note":"Sweep sorted queries with a heap of eligible intervals.","memoryCue":"Sort queries; push intervals whose start is eligible; pop intervals whose end is expired."},{"id":352,"title":"Data Stream as Disjoint Intervals","difficulty":"Hard","slug":"data-stream-as-disjoint-intervals","note":"Merge the neighboring ranges touched by each new value.","memoryCue":"Maintain ordered disjoint ranges and merge only the predecessor/successor touching the new value."}]},{"id":"trees","pattern":"07","title":"Trees, BSTs & Recursion","shortTitle":"Trees & BSTs","complexity":"O(n)","intro":"Tree problems become manageable when each recursive call has one clear contract. Decide what a node receives from its parent and what it returns upward.","cues":["Path, depth, ancestor, or subtree","Level-by-level processing","Ordered lookup in a BST","A result must combine left and right children"],"insight":"DFS fits subtree answers; BFS fits distance and levels. For recursion, state the return value in one sentence before writing code.","templateTitle":"Postorder recursion","code":"def dfs(node):\n    if not node:\n        return base_value\n    left = dfs(node.left)\n    right = dfs(node.right)\n    update_answer(left, right)\n    return value_for_parent(left, right)","problems":[{"id":104,"title":"Maximum Depth of Binary Tree","difficulty":"Easy","slug":"maximum-depth-of-binary-tree","note":"The base recursion contract: return subtree depth."},{"id":226,"title":"Invert Binary Tree","difficulty":"Easy","slug":"invert-binary-tree","note":"Swap children and recurse; focus on the return contract."},{"id":102,"title":"Binary Tree Level Order Traversal","difficulty":"Medium","slug":"binary-tree-level-order-traversal","note":"Snapshot the queue size at the start of each level."},{"id":199,"title":"Binary Tree Right Side View","difficulty":"Medium","slug":"binary-tree-right-side-view","note":"Capture the last node of every BFS level."},{"id":98,"title":"Validate Binary Search Tree","difficulty":"Medium","slug":"validate-binary-search-tree","note":"Carry strict lower and upper bounds down the tree."},{"id":230,"title":"Kth Smallest Element in a BST","difficulty":"Medium","slug":"kth-smallest-element-in-a-bst","note":"Inorder traversal visits BST values in sorted order."},{"id":105,"title":"Construct Binary Tree from Preorder and Inorder Traversal","difficulty":"Medium","slug":"construct-binary-tree-from-preorder-and-inorder-traversal","note":"Preorder selects roots; inorder splits subtrees."},{"id":236,"title":"Lowest Common Ancestor of a Binary Tree","difficulty":"Medium","slug":"lowest-common-ancestor-of-a-binary-tree","note":"Return a found target or the node where two results meet."},{"id":1448,"title":"Count Good Nodes in Binary Tree","difficulty":"Medium","slug":"count-good-nodes-in-binary-tree","note":"Carry the maximum value seen along the path."},{"id":124,"title":"Binary Tree Maximum Path Sum","difficulty":"Hard","slug":"binary-tree-maximum-path-sum","note":"Return one branch upward but score two branches locally."},{"id":297,"title":"Serialize and Deserialize Binary Tree","difficulty":"Hard","slug":"serialize-and-deserialize-binary-tree","note":"Preserve null markers so the tree structure is reversible."},{"id":968,"title":"Binary Tree Cameras","difficulty":"Hard","slug":"binary-tree-cameras","note":"Use postorder states for uncovered, covered, and camera nodes.","memoryCue":"Three postorder states: needs camera, has camera, or covered; place cameras at parents of uncovered nodes."}]},{"id":"tries","pattern":"08","title":"Tries & String Search","shortTitle":"Tries & Strings","complexity":"O(word length)","intro":"A trie shares prefixes across many words. It is useful when queries explore characters incrementally or when many words must be matched against one board or stream.","cues":["Prefix lookup or autocomplete","Many dictionary words share prefixes","Wildcard character search","Search branches can be pruned by prefixes"],"insight":"A trie pays an upfront memory cost to make every prefix a navigable state. Prune dead branches aggressively during backtracking.","templateTitle":"Trie insertion and lookup","code":"node = root\nfor char in word:\n    node = node.children.setdefault(char, Node())\nnode.is_word = True\n\n# Search follows the same edges and checks is_word.","problems":[{"id":208,"title":"Implement Trie (Prefix Tree)","difficulty":"Medium","slug":"implement-trie-prefix-tree","note":"Build the core insert, exact-search, and prefix-search operations."},{"id":211,"title":"Design Add and Search Words Data Structure","difficulty":"Medium","slug":"design-add-and-search-words-data-structure","note":"A wildcard creates a DFS branch across all children."},{"id":648,"title":"Replace Words","difficulty":"Medium","slug":"replace-words","note":"Stop at the shortest dictionary prefix."},{"id":677,"title":"Map Sum Pairs","difficulty":"Medium","slug":"map-sum-pairs","note":"Maintain prefix totals while accounting for overwritten keys."},{"id":1268,"title":"Search Suggestions System","difficulty":"Medium","slug":"search-suggestions-system","note":"Keep a small ordered suggestion list at each prefix."},{"id":212,"title":"Word Search II","difficulty":"Hard","slug":"word-search-ii","note":"Combine board backtracking with trie prefix pruning.","memoryCue":"Build one trie for all words, DFS the board once, and delete exhausted trie branches."},{"id":472,"title":"Concatenated Words","difficulty":"Hard","slug":"concatenated-words","note":"Use earlier words to segment each longer word.","memoryCue":"Sort words by length and test each word using only previously accepted shorter words."}]},{"id":"heaps","pattern":"09","title":"Heaps & Priority Queues","shortTitle":"Heaps & Top K","complexity":"O(n log k)","intro":"A heap keeps the next most important item available while the set changes. For top K, cap the heap so work depends on k rather than the full input size.","cues":["K largest, closest, or most frequent","Repeatedly process the next smallest event","Merge sorted sources","Streaming median or scheduling"],"insight":"Choose the heap root as the candidate you are most willing to evict. A min-heap therefore retains the largest k values.","templateTitle":"Capped heap","code":"heap = []\nfor x in items:\n    heappush(heap, score(x))\n    if len(heap) > k:\n        heappop(heap)\n# heap contains the best k candidates","problems":[{"id":215,"title":"Kth Largest Element in an Array","difficulty":"Medium","slug":"kth-largest-element-in-an-array","note":"Maintain a min-heap capped at k values."},{"id":347,"title":"Top K Frequent Elements","difficulty":"Medium","slug":"top-k-frequent-elements","note":"Heap frequencies or exploit bounded counts with buckets."},{"id":973,"title":"K Closest Points to Origin","difficulty":"Medium","slug":"k-closest-points-to-origin","note":"Use squared distance and retain only k candidates."},{"id":621,"title":"Task Scheduler","difficulty":"Medium","slug":"task-scheduler","note":"Process the most frequent available task and cool it down."},{"id":378,"title":"Kth Smallest Element in a Sorted Matrix","difficulty":"Medium","slug":"kth-smallest-element-in-a-sorted-matrix","note":"Merge sorted rows or binary-search the value space."},{"id":1834,"title":"Single-Threaded CPU","difficulty":"Medium","slug":"single-threaded-cpu","note":"Sweep enqueue times and heap available jobs by priority."},{"id":23,"title":"Merge k Sorted Lists","difficulty":"Hard","slug":"merge-k-sorted-lists","note":"Keep only the current head of every nonempty list."},{"id":295,"title":"Find Median from Data Stream","difficulty":"Hard","slug":"find-median-from-data-stream","note":"Balance a max-heap lower half and min-heap upper half.","memoryCue":"Two heaps: max-heap for the lower half, min-heap for the upper half; sizes differ by at most one."},{"id":767,"title":"Reorganize String","difficulty":"Medium","slug":"reorganize-string","note":"Always use the most frequent character not used last."},{"id":502,"title":"IPO","difficulty":"Hard","slug":"ipo","note":"Sweep affordable projects into a max-heap of profits.","memoryCue":"Sort by required capital; before each pick, heap every newly affordable project by maximum profit."}]},{"id":"backtracking","pattern":"10","title":"Backtracking & Combinatorial Search","shortTitle":"Backtracking","complexity":"O(branches^depth)","intro":"Backtracking explores a decision tree while maintaining a partial candidate. Make one choice, recurse, then undo it so sibling branches see clean state.","cues":["Generate all combinations or arrangements","Choose, skip, or partition","Constraints invalidate partial answers early","Board placement or path construction"],"insight":"Performance comes from pruning. Sort when it exposes duplicates or makes an impossible remainder obvious, and stop before building doomed branches.","templateTitle":"Choose, recurse, undo","code":"def backtrack(start, path):\n    if complete(path):\n        answer.append(path.copy())\n        return\n    for i in range(start, len(items)):\n        if should_skip(i): continue\n        path.append(items[i])\n        backtrack(next_start(i), path)\n        path.pop()","problems":[{"id":78,"title":"Subsets","difficulty":"Medium","slug":"subsets","note":"At each index, include or exclude the current value."},{"id":90,"title":"Subsets II","difficulty":"Medium","slug":"subsets-ii","note":"Sort and skip equal choices at the same tree depth."},{"id":46,"title":"Permutations","difficulty":"Medium","slug":"permutations","note":"Track which values are already used in the current arrangement."},{"id":47,"title":"Permutations II","difficulty":"Medium","slug":"permutations-ii","note":"Skip a duplicate unless its previous twin is already in the path."},{"id":39,"title":"Combination Sum","difficulty":"Medium","slug":"combination-sum","note":"Reuse a candidate by recursing from its own index."},{"id":40,"title":"Combination Sum II","difficulty":"Medium","slug":"combination-sum-ii","note":"Use each candidate once and skip same-level duplicates."},{"id":17,"title":"Letter Combinations of a Phone Number","difficulty":"Medium","slug":"letter-combinations-of-a-phone-number","note":"Every digit contributes one branching layer."},{"id":79,"title":"Word Search","difficulty":"Medium","slug":"word-search","note":"Mark the current cell before exploring four directions."},{"id":131,"title":"Palindrome Partitioning","difficulty":"Medium","slug":"palindrome-partitioning","note":"Only recurse after choosing a palindromic prefix."},{"id":51,"title":"N-Queens","difficulty":"Hard","slug":"n-queens","note":"Track blocked columns and both diagonal families.","memoryCue":"One queen per row; block column, row-col diagonal, and row+col diagonal with three sets."}]},{"id":"graphs","pattern":"11","title":"Graphs, Grids & Union Find","shortTitle":"Graphs & Union Find","complexity":"O(V + E)","intro":"Graphs model arbitrary relationships. Build or infer neighbors, track visited states, and use DFS/BFS for traversal or disjoint-set union for repeated connectivity.","cues":["Connections, components, routes, or grids","Cycle detection or prerequisite ordering","Shortest path with equal edge costs","Repeated connectivity queries"],"insight":"Grid problems are graphs in disguise. Mark visited when enqueuing to avoid duplicate work; use union-by-size and path compression for dynamic components.","templateTitle":"Breadth-first search","code":"queue = deque([start])\nseen = {start}\nwhile queue:\n    node = queue.popleft()\n    for nxt in neighbors(node):\n        if nxt not in seen:\n            seen.add(nxt)\n            queue.append(nxt)","problems":[{"id":200,"title":"Number of Islands","difficulty":"Medium","slug":"number-of-islands","note":"Flood-fill every unvisited land component."},{"id":133,"title":"Clone Graph","difficulty":"Medium","slug":"clone-graph","note":"Map each original node to its clone during traversal."},{"id":994,"title":"Rotting Oranges","difficulty":"Medium","slug":"rotting-oranges","note":"Multi-source BFS processes all infection fronts together."},{"id":130,"title":"Surrounded Regions","difficulty":"Medium","slug":"surrounded-regions","note":"Protect border-connected regions before flipping the rest."},{"id":417,"title":"Pacific Atlantic Water Flow","difficulty":"Medium","slug":"pacific-atlantic-water-flow","note":"Reverse the flow and search inward from both oceans."},{"id":207,"title":"Course Schedule","difficulty":"Medium","slug":"course-schedule","note":"A valid schedule exists exactly when the dependency graph is acyclic."},{"id":210,"title":"Course Schedule II","difficulty":"Medium","slug":"course-schedule-ii","note":"Return the topological order, not just cycle status."},{"id":684,"title":"Redundant Connection","difficulty":"Medium","slug":"redundant-connection","note":"The first edge joining an existing component closes a cycle."},{"id":721,"title":"Accounts Merge","difficulty":"Medium","slug":"accounts-merge","note":"Union accounts that share any email address."},{"id":547,"title":"Number of Provinces","difficulty":"Medium","slug":"number-of-provinces","note":"Count connected components in an adjacency matrix."},{"id":399,"title":"Evaluate Division","difficulty":"Medium","slug":"evaluate-division","note":"Traverse a weighted graph while multiplying edge ratios."},{"id":127,"title":"Word Ladder","difficulty":"Hard","slug":"word-ladder","note":"BFS transformation layers; generate neighbors efficiently.","memoryCue":"Bidirectional BFS or wildcard-pattern buckets prevent scanning the whole dictionary per word."}]},{"id":"advanced-graphs","pattern":"12","title":"Advanced Graph Algorithms","shortTitle":"Advanced Graphs","complexity":"O(E log V)","intro":"Weighted paths, minimum spanning trees, and constrained routes require stronger invariants than ordinary traversal. Match the edge properties to the algorithm.","cues":["Weighted shortest path","Connect every node at minimum total cost","Reconstruct an Eulerian route","Shortest path with a limited number of stops"],"insight":"Dijkstra needs nonnegative weights; Bellman-Ford tolerates negative edges; Kruskal grows a minimum spanning tree; Hierholzer consumes every edge exactly once.","templateTitle":"Dijkstra shortest path","code":"heap = [(0, source)]\ndist = {}\nwhile heap:\n    cost, node = heappop(heap)\n    if node in dist: continue\n    dist[node] = cost\n    for nxt, weight in graph[node]:\n        if nxt not in dist:\n            heappush(heap, (cost + weight, nxt))","problems":[{"id":743,"title":"Network Delay Time","difficulty":"Medium","slug":"network-delay-time","note":"Dijkstra finalizes nodes in increasing shortest distance."},{"id":1631,"title":"Path With Minimum Effort","difficulty":"Medium","slug":"path-with-minimum-effort","note":"Path cost is the maximum edge; minimize it with Dijkstra."},{"id":1584,"title":"Min Cost to Connect All Points","difficulty":"Medium","slug":"min-cost-to-connect-all-points","note":"Build a minimum spanning tree with Prim or Kruskal."},{"id":787,"title":"Cheapest Flights Within K Stops","difficulty":"Medium","slug":"cheapest-flights-within-k-stops","note":"Distance state must include how many edges were used."},{"id":1976,"title":"Number of Ways to Arrive at Destination","difficulty":"Medium","slug":"number-of-ways-to-arrive-at-destination","note":"Count equal-cost relaxations during Dijkstra."},{"id":1514,"title":"Path with Maximum Probability","difficulty":"Medium","slug":"path-with-maximum-probability","note":"Use a max-heap and multiply probabilities along edges."},{"id":778,"title":"Swim in Rising Water","difficulty":"Hard","slug":"swim-in-rising-water","note":"The path cost is the maximum elevation encountered."},{"id":332,"title":"Reconstruct Itinerary","difficulty":"Hard","slug":"reconstruct-itinerary","note":"Hierholzer traversal builds the route in reverse."},{"id":269,"title":"Alien Dictionary","difficulty":"Hard","slug":"alien-dictionary","note":"Derive the first differing character edge, then topologically sort.","memoryCue":"Only the first differing character gives an edge; reject the invalid longer-prefix-before-shorter case."},{"id":1192,"title":"Critical Connections in a Network","difficulty":"Hard","slug":"critical-connections-in-a-network","note":"Low-link values identify edges with no back-route.","memoryCue":"Tarjan bridge rule: edge u-v is critical when low[v] is greater than discovery[u]."}]},{"id":"greedy","pattern":"13","title":"Greedy Algorithms","shortTitle":"Greedy","complexity":"Usually O(n log n)","intro":"A greedy algorithm commits to a locally best move that can be proven not to block an optimal result. Sorting often exposes the safe exchange argument.","cues":["Maximize reach or minimize removals","Choose non-overlapping work","Local surplus can cover future deficit","An exchange argument can replace any optimal first move"],"insight":"Do not trust a greedy hunch without an invariant. Explain why any optimal solution can be changed to make your choice first without becoming worse.","templateTitle":"Farthest reachable position","code":"farthest = 0\nfor i, jump in enumerate(nums):\n    if i > farthest:\n        return False\n    farthest = max(farthest, i + jump)\nreturn True","problems":[{"id":55,"title":"Jump Game","difficulty":"Medium","slug":"jump-game","note":"Maintain the farthest index reachable so far."},{"id":45,"title":"Jump Game II","difficulty":"Medium","slug":"jump-game-ii","note":"Each jump expands a BFS-like reachable layer."},{"id":53,"title":"Maximum Subarray","difficulty":"Medium","slug":"maximum-subarray","note":"Discard a negative prefix because it can only hurt the future."},{"id":134,"title":"Gas Station","difficulty":"Medium","slug":"gas-station","note":"A failed start invalidates every station before the failure point."},{"id":763,"title":"Partition Labels","difficulty":"Medium","slug":"partition-labels","note":"Close a partition only after every seen character ends."},{"id":678,"title":"Valid Parenthesis String","difficulty":"Medium","slug":"valid-parenthesis-string","note":"Track the minimum and maximum possible number of opens."},{"id":1899,"title":"Merge Triplets to Form Target Triplet","difficulty":"Medium","slug":"merge-triplets-to-form-target-triplet","note":"Ignore overshooting triplets; collect matched target coordinates."},{"id":846,"title":"Hand of Straights","difficulty":"Medium","slug":"hand-of-straights","note":"Always start groups from the smallest remaining card."},{"id":135,"title":"Candy","difficulty":"Hard","slug":"candy","note":"Satisfy increasing constraints from both directions.","memoryCue":"Two passes: satisfy left-neighbor increases, then right-neighbor increases using max."}]},{"id":"dp-1d","pattern":"14","title":"One-Dimensional Dynamic Programming","shortTitle":"1D Dynamic Programming","complexity":"O(states × choices)","intro":"Dynamic programming stores answers to overlapping subproblems. In one dimension, a position, amount, or remaining prefix is usually enough to define the state.","cues":["Count ways or find an optimum","Choices revisit the same remainder","A decision depends on a few earlier positions","Greedy choices cannot be proven safe"],"insight":"The recurrence is the solution; the array is only storage. State the subproblem in words, write transitions, set base cases, then compress memory if possible.","templateTitle":"Memoized decisions","code":"@cache\ndef dp(i):\n    if i >= len(items):\n        return base_case\n    skip = dp(i + 1)\n    take = value(i) + dp(next_index(i))\n    return best(skip, take)","problems":[{"id":70,"title":"Climbing Stairs","difficulty":"Easy","slug":"climbing-stairs","note":"The single DP warm-up: ways(i) comes from the previous two states."},{"id":198,"title":"House Robber","difficulty":"Medium","slug":"house-robber","note":"Choose take-plus-two-back or skip."},{"id":213,"title":"House Robber II","difficulty":"Medium","slug":"house-robber-ii","note":"Break the cycle into two linear robberies."},{"id":322,"title":"Coin Change","difficulty":"Medium","slug":"coin-change","note":"Build the minimum coin count for every smaller amount."},{"id":139,"title":"Word Break","difficulty":"Medium","slug":"word-break","note":"A position is reachable if a valid dictionary word ends there."},{"id":91,"title":"Decode Ways","difficulty":"Medium","slug":"decode-ways","note":"Transitions depend on valid one- and two-digit decodings."},{"id":377,"title":"Combination Sum IV","difficulty":"Medium","slug":"combination-sum-iv","note":"Order matters, so iterate choices inside every target state."},{"id":300,"title":"Longest Increasing Subsequence","difficulty":"Medium","slug":"longest-increasing-subsequence","note":"Learn both quadratic DP and patience-sorting tails.","memoryCue":"Tails array + lower_bound: tails[length-1] is the smallest ending value for that length."},{"id":152,"title":"Maximum Product Subarray","difficulty":"Medium","slug":"maximum-product-subarray","note":"Track both maximum and minimum products because negatives swap roles."},{"id":309,"title":"Best Time to Buy and Sell Stock with Cooldown","difficulty":"Medium","slug":"best-time-to-buy-and-sell-stock-with-cooldown","note":"Model hold, sold, and resting states."},{"id":1235,"title":"Maximum Profit in Job Scheduling","difficulty":"Hard","slug":"maximum-profit-in-job-scheduling","note":"Sort jobs and binary-search the next compatible state.","memoryCue":"Weighted interval scheduling: sort by start, then DP chooses skip or profit plus next compatible job."}]},{"id":"dp-2d","pattern":"15","title":"Two-Dimensional Dynamic Programming","shortTitle":"2D Dynamic Programming","complexity":"O(rows × columns)","intro":"Two-dimensional DP appears when a subproblem needs two coordinates: two string positions, a grid cell, or an item index plus remaining capacity.","cues":["Compare or transform two strings","Grid paths with costs or obstacles","Choose items under a capacity","A state needs two independent coordinates"],"insight":"Draw the state grid and label what one cell means. Every transition should come from already-solved neighboring states or a smaller pair of indices.","templateTitle":"Two-sequence DP","code":"dp = [[0] * (m + 1) for _ in range(n + 1)]\nfor i in range(n - 1, -1, -1):\n    for j in range(m - 1, -1, -1):\n        if a[i] == b[j]:\n            dp[i][j] = 1 + dp[i + 1][j + 1]\n        else:\n            dp[i][j] = best(dp[i + 1][j], dp[i][j + 1])","problems":[{"id":62,"title":"Unique Paths","difficulty":"Medium","slug":"unique-paths","note":"Every cell receives paths from above and left."},{"id":63,"title":"Unique Paths II","difficulty":"Medium","slug":"unique-paths-ii","note":"Obstacles zero out otherwise identical grid transitions."},{"id":64,"title":"Minimum Path Sum","difficulty":"Medium","slug":"minimum-path-sum","note":"Accumulate the cheaper predecessor into each cell."},{"id":5,"title":"Longest Palindromic Substring","difficulty":"Medium","slug":"longest-palindromic-substring","note":"Expand centers or fill intervals from short to long."},{"id":1143,"title":"Longest Common Subsequence","difficulty":"Medium","slug":"longest-common-subsequence","note":"State is a pair of positions in the two strings."},{"id":516,"title":"Longest Palindromic Subsequence","difficulty":"Medium","slug":"longest-palindromic-subsequence","note":"Match endpoints or drop one endpoint."},{"id":494,"title":"Target Sum","difficulty":"Medium","slug":"target-sum","note":"Convert signs into a subset-sum count or memoize index and total."},{"id":115,"title":"Distinct Subsequences","difficulty":"Hard","slug":"distinct-subsequences","note":"Count ways a suffix of the source can form a suffix of the target."},{"id":312,"title":"Burst Balloons","difficulty":"Hard","slug":"burst-balloons","note":"Choose the final balloon popped inside each interval.","memoryCue":"Interval DP becomes clean only when you choose which balloon is popped last, not first."},{"id":72,"title":"Edit Distance","difficulty":"Hard","slug":"edit-distance","note":"Insert, delete, and replace move through neighboring states."},{"id":10,"title":"Regular Expression Matching","difficulty":"Hard","slug":"regular-expression-matching","note":"A star either skips its pair or consumes one matching character.","memoryCue":"Memoize (string index, pattern index); star means skip x* or consume one match and stay."}]},{"id":"bit-math","pattern":"16","title":"Bit Manipulation, Math & Geometry","shortTitle":"Bits, Math & Geometry","complexity":"Varies","intro":"Bitwise structure can compress a set of boolean facts into one integer. Mathematical invariants and coordinate reasoning often remove simulation entirely.","cues":["Parity, powers of two, or unique values","Need constant-space set-like state","Integer overflow or digit operations","Points, slopes, rotation, or geometric counting"],"insight":"Know the identities: x xor x is zero, x & (x - 1) removes the lowest set bit, and shifts multiply or divide by powers of two.","templateTitle":"Iterate set bits","code":"count = 0\nwhile value:\n    value &= value - 1  # remove lowest set bit\n    count += 1\n\n# XOR cancels paired values: a ^ a == 0","problems":[{"id":191,"title":"Number of 1 Bits","difficulty":"Easy","slug":"number-of-1-bits","note":"The one bitwise warm-up: repeatedly remove the lowest set bit."},{"id":338,"title":"Counting Bits","difficulty":"Easy","slug":"counting-bits","note":"Reuse the count of a smaller value after removing one set bit."},{"id":268,"title":"Missing Number","difficulty":"Medium","slug":"missing-number","note":"XOR indices and values so every paired number cancels."},{"id":371,"title":"Sum of Two Integers","difficulty":"Medium","slug":"sum-of-two-integers","note":"XOR computes partial sum; AND and shift compute carry."},{"id":201,"title":"Bitwise AND of Numbers Range","difficulty":"Medium","slug":"bitwise-and-of-numbers-range","note":"Only the common binary prefix survives the entire range."},{"id":7,"title":"Reverse Integer","difficulty":"Medium","slug":"reverse-integer","note":"Build the reversed value while checking 32-bit bounds."},{"id":50,"title":"Pow(x, n)","difficulty":"Medium","slug":"powx-n","note":"Binary exponentiation squares the base while halving the exponent."},{"id":43,"title":"Multiply Strings","difficulty":"Medium","slug":"multiply-strings","note":"Accumulate digit-pair products into positional buckets."},{"id":149,"title":"Max Points on a Line","difficulty":"Hard","slug":"max-points-on-a-line","note":"Normalize slopes with reduced integer direction pairs.","memoryCue":"Anchor each point and hash reduced (dy/gcd, dx/gcd) pairs; normalize signs and verticals."}]}];
+      const seedSolvedIds = [
+        128, 238, 560, 219, 380, 125, 88, 27, 75, 31, 15, 11, 3, 424, 209,
+        76, 155, 739, 503, 402, 316, 33, 34, 875, 162, 206, 142, 146, 56, 435,
+        1094, 199, 98, 230, 105, 236, 208, 211, 215, 347, 621, 295, 200, 994,
+        210, 684, 721, 547,
+      ];
+      const storageKey = "interview-atlas-solved-v1";
+      const allProblemIds = new Set(
+        chapters.flatMap((chapter) => chapter.problems.map((problem) => problem.id)),
+      );
+      const totalProblemCount = allProblemIds.size;
+      const chapterIcons = ["{}", "↔", "▤", "⌁", "⇄", "⑂", "✦", "⌘", "✓"];
+
+      let storageEnabled = false;
+      let activeId = chapters[0].id;
+      let activeFilter = "all";
+      let query = "";
+      let solvedIds = new Set(loadProgress());
+
+      const elements = {
+        nav: document.querySelector("#chapter-nav"),
+        chapterTotal: document.querySelector("#chapter-total"),
+        headerSolved: document.querySelector("#header-solved"),
+        headerTotal: document.querySelector("#header-total"),
+        overallPercent: document.querySelector("#overall-percent"),
+        overallCount: document.querySelector("#overall-count"),
+        progressBar: document.querySelector("#progress-bar"),
+        progressTrack: document.querySelector(".progress-track"),
+        storageNote: document.querySelector("#storage-note"),
+        pattern: document.querySelector("#pattern-label"),
+        title: document.querySelector("#chapter-title"),
+        complexity: document.querySelector("#complexity"),
+        chapterProgress: document.querySelector("#chapter-progress"),
+        intro: document.querySelector("#chapter-intro"),
+        insight: document.querySelector("#chapter-insight"),
+        cues: document.querySelector("#chapter-cues"),
+        templateTitle: document.querySelector("#template-title"),
+        code: document.querySelector("#chapter-code"),
+        difficultySummary: document.querySelector("#difficulty-summary"),
+        problemList: document.querySelector("#problem-list"),
+        filters: document.querySelector("#filters"),
+        searchInputs: [...document.querySelectorAll('.search input[type="search"]')],
+        clearButtons: [...document.querySelectorAll(".clear-search")],
+      };
+
+      function loadProgress() {
+        try {
+          const testKey = `${storageKey}-test`;
+          localStorage.setItem(testKey, "1");
+          localStorage.removeItem(testKey);
+          storageEnabled = true;
+
+          const saved = localStorage.getItem(storageKey);
+          if (saved === null) return seedSolvedIds;
+
+          const parsed = JSON.parse(saved);
+          return Array.isArray(parsed)
+            ? parsed.filter((id) => Number.isInteger(id) && allProblemIds.has(id))
+            : seedSolvedIds;
+        } catch {
+          storageEnabled = false;
+          return seedSolvedIds;
+        }
+      }
+
+      function saveProgress() {
+        if (!storageEnabled) return;
+        try {
+          localStorage.setItem(storageKey, JSON.stringify([...solvedIds]));
+        } catch {
+          storageEnabled = false;
+        }
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function getActiveChapter() {
+        return chapters.find((chapter) => chapter.id === activeId) || chapters[0];
+      }
+
+      function chapterSolvedCount(chapter) {
+        return chapter.problems.filter((problem) => solvedIds.has(problem.id)).length;
+      }
+
+      function renderNavigation() {
+        elements.chapterTotal.textContent = String(chapters.length).padStart(2, "0");
+        elements.nav.innerHTML = chapters
+          .map((chapter, index) => {
+            const solved = chapterSolvedCount(chapter);
+            const active = chapter.id === activeId;
+            return `
+              <button
+                class="chapter-button${active ? " active" : ""}"
+                type="button"
+                data-chapter-id="${escapeHtml(chapter.id)}"
+                aria-current="${active ? "page" : "false"}"
+              >
+                <span class="chapter-icon" aria-hidden="true">${chapterIcons[index % chapterIcons.length]}</span>
+                <span class="chapter-title-short">${escapeHtml(chapter.shortTitle)}</span>
+                <span class="chapter-count">${solved}/${chapter.problems.length}</span>
+              </button>`;
+          })
+          .join("");
+      }
+
+      function renderOverallProgress() {
+        const solvedCount = solvedIds.size;
+        const percent = Math.round((solvedCount / totalProblemCount) * 100);
+        elements.headerSolved.textContent = solvedCount;
+        elements.headerTotal.textContent = totalProblemCount;
+        elements.overallPercent.textContent = `${percent}%`;
+        elements.overallCount.textContent = `${solvedCount}/${totalProblemCount}`;
+        elements.progressBar.style.width = `${percent}%`;
+        elements.progressTrack.setAttribute("aria-valuenow", String(percent));
+
+        elements.storageNote.classList.toggle("unsaved", !storageEnabled);
+        elements.storageNote.lastElementChild.textContent = storageEnabled
+          ? "Progress is saved in this browser."
+          : "This browser is not allowing local saves.";
+      }
+
+      function renderChapter() {
+        const chapter = getActiveChapter();
+        const solvedCount = chapterSolvedCount(chapter);
+        const totals = chapter.problems.reduce(
+          (result, problem) => {
+            result[problem.difficulty] += 1;
+            return result;
+          },
+          { Easy: 0, Medium: 0, Hard: 0 },
+        );
+
+        elements.pattern.textContent = `Pattern ${chapter.pattern}`;
+        elements.title.textContent = chapter.title;
+        elements.complexity.textContent = chapter.complexity;
+        elements.chapterProgress.textContent = `${solvedCount}/${chapter.problems.length}`;
+        elements.intro.textContent = chapter.intro;
+        elements.insight.textContent = chapter.insight;
+        elements.cues.innerHTML = chapter.cues
+          .map((cue) => `<li><span class="cue-dot" aria-hidden="true"></span>${escapeHtml(cue)}</li>`)
+          .join("");
+        elements.templateTitle.textContent = chapter.templateTitle;
+        elements.code.textContent = chapter.code;
+        elements.difficultySummary.textContent = `${totals.Easy} easy · ${totals.Medium} medium · ${totals.Hard} hard`;
+        document.title = `${chapter.shortTitle} — Interview Atlas`;
+      }
+
+      function renderProblems() {
+        const chapter = getActiveChapter();
+        const normalizedQuery = query.trim().toLowerCase();
+        const problems = chapter.problems.filter((problem) => {
+          const solved = solvedIds.has(problem.id);
+          const matchesFilter =
+            activeFilter === "all" ||
+            (activeFilter === "solved" ? solved : !solved);
+          const matchesQuery =
+            !normalizedQuery ||
+            problem.title.toLowerCase().includes(normalizedQuery) ||
+            String(problem.id).includes(normalizedQuery);
+          return matchesFilter && matchesQuery;
+        });
+
+        if (!problems.length) {
+          elements.problemList.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-icon" aria-hidden="true">⌕</div>
+              <p class="empty-title">No problems match this view</p>
+              <p class="empty-copy">Try another status or clear your search.</p>
+            </div>`;
+          return;
+        }
+
+        elements.problemList.innerHTML = problems
+          .map((problem) => {
+            const solved = solvedIds.has(problem.id);
+            return `
+              <div class="problem-row${solved ? " solved" : ""}">
+                <input
+                  class="problem-checkbox"
+                  type="checkbox"
+                  data-problem-id="${problem.id}"
+                  ${solved ? "checked" : ""}
+                  aria-label="Mark ${escapeHtml(problem.title)} as ${solved ? "unsolved" : "solved"}"
+                />
+                <span class="problem-id">${problem.id}</span>
+                <div class="problem-copy">
+                  <a
+                    class="problem-link"
+                    href="https://leetcode.com/problems/${encodeURIComponent(problem.slug)}/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >${escapeHtml(problem.title)}<span class="external-arrow" aria-hidden="true">↗</span></a>
+                  <p class="problem-note"><span class="technique">Technique · </span>${escapeHtml(problem.note)}</p>
+                  ${
+                    problem.memoryCue
+                      ? `<p class="memory-cue"><span class="memory-label">Memorise</span>${escapeHtml(problem.memoryCue)}</p>`
+                      : ""
+                  }
+                </div>
+                <div class="problem-badges">
+                  ${problem.memoryCue ? '<span class="pill specific">Specific pattern</span>' : ""}
+                  <span class="pill ${problem.difficulty.toLowerCase()}">${escapeHtml(problem.difficulty)}</span>
+                </div>
+              </div>`;
+          })
+          .join("");
+      }
+
+      function renderFilters() {
+        elements.filters.querySelectorAll("[data-filter]").forEach((button) => {
+          const active = button.dataset.filter === activeFilter;
+          button.classList.toggle("active", active);
+          button.setAttribute("aria-selected", String(active));
+        });
+      }
+
+      function syncSearchInputs() {
+        elements.searchInputs.forEach((input) => {
+          if (input.value !== query) input.value = query;
+        });
+        elements.clearButtons.forEach((button) => {
+          button.classList.toggle("visible", Boolean(query));
+        });
+      }
+
+      function renderAll() {
+        renderNavigation();
+        renderOverallProgress();
+        renderChapter();
+        renderProblems();
+        renderFilters();
+        syncSearchInputs();
+      }
+
+      elements.nav.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-chapter-id]");
+        if (!button || button.dataset.chapterId === activeId) return;
+        activeId = button.dataset.chapterId;
+        query = "";
+        renderAll();
+        if (window.innerWidth < 981) {
+          document.querySelector(".main-content").scrollIntoView({ behavior: "smooth" });
+        }
+      });
+
+      elements.filters.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-filter]");
+        if (!button) return;
+        activeFilter = button.dataset.filter;
+        renderFilters();
+        renderProblems();
+      });
+
+      elements.problemList.addEventListener("change", (event) => {
+        const checkbox = event.target.closest("[data-problem-id]");
+        if (!checkbox) return;
+        const problemId = Number(checkbox.dataset.problemId);
+        if (checkbox.checked) solvedIds.add(problemId);
+        else solvedIds.delete(problemId);
+        saveProgress();
+        renderAll();
+      });
+
+      elements.searchInputs.forEach((input) => {
+        input.addEventListener("input", (event) => {
+          query = event.target.value;
+          syncSearchInputs();
+          renderProblems();
+        });
+      });
+
+      elements.clearButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          query = "";
+          syncSearchInputs();
+          renderProblems();
+          const visibleInput = elements.searchInputs.find(
+            (input) => input.offsetParent !== null,
+          );
+          visibleInput?.focus();
+        });
+      });
+
+      renderAll();
+    </script>
+  </body>
+</html>

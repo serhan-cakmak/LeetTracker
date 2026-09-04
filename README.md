@@ -16,7 +16,8 @@ Interview Atlas is an interactive study guide and progress tracker for coding in
 - Curated problems with difficulty labels, notes, and direct LeetCode links
 - Search and solved/unsolved filters
 - Chapter-level and overall progress tracking
-- Persistent progress with Cloudflare D1
+- Persistent progress with Cloudflare D1 in the full app
+- Standalone HTML version with progress saved in the browser
 - Responsive interface for desktop and mobile
 
 ## Tech stack
@@ -26,8 +27,20 @@ Interview Atlas is an interactive study guide and progress tracker for coding in
 - Tailwind CSS and shadcn/ui components
 - Cloudflare Workers and D1
 - Drizzle ORM and Drizzle Kit
+- Plain HTML, CSS, and JavaScript for the standalone version
 
-## Run locally
+## Open the standalone HTML version
+
+For the simplest local option, open the project folder and double-click
+`interview-atlas.html`. It works directly in your browser—there is no setup,
+Node.js, npm command, or local server.
+
+The standalone version includes the same chapters, problem notes, search,
+filters, LeetCode links, and progress tracking. Progress is stored locally in
+the browser, so it is specific to that browser and computer rather than synced
+through the database.
+
+## Run the full app locally
 
 ### Prerequisites
 
@@ -70,6 +83,7 @@ npm start
 ## Project structure
 
 ```text
+interview-atlas.html     Standalone version that opens without a server
 app/                    Routes, global styles, and API handlers
 components/ui/          Shared interface primitives
 db/                     Drizzle schema and Cloudflare binding types
