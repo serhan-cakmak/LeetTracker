@@ -4,11 +4,7 @@ Interview Atlas is an interactive study guide and progress tracker for coding in
 
 ## Preview
 
-![Interview Atlas desktop dashboard](docs/screenshots/interview-atlas-desktop.png)
-
-<p align="center">
-  <img src="docs/screenshots/interview-atlas-mobile.png" alt="Interview Atlas mobile dashboard" width="360" />
-</p>
+![Interview Atlas topic refresher and progress dashboard](docs/screenshots/interview-atlas-desktop.png)
 
 ## Features
 
@@ -37,10 +33,17 @@ For the simplest local option, open the project folder and double-click
 `interview-atlas.html`. It works directly in your browser—there is no setup,
 Node.js, npm command, or local server.
 
+The HTML file is fully standalone: its styles, scripts, chapters, reminders,
+and implementation templates are embedded in the file. You can move or share
+`interview-atlas.html` by itself and open it without installing anything or
+running a server.
+
 The standalone version includes the same chapters, problem notes, search,
-filters, LeetCode links, and progress tracking. Progress is stored locally in
-the browser, so it is specific to that browser and computer rather than synced
-through the database.
+filters, LeetCode links, full-history LeetCode JSON import, and progress
+tracking. Progress is stored locally in the browser, so it is specific to that
+browser and computer rather than synced through the database. Opening LeetCode
+links or downloading a fresh progress export still requires an internet
+connection.
 
 ## Run the full app locally
 
