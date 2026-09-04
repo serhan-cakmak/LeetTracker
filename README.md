@@ -13,6 +13,7 @@ Interview Atlas is an interactive study guide and progress tracker for coding in
 ## Features
 
 - Pattern-based chapters covering core interview topics
+- Pre-problem refreshers with recognition checks, pitfalls, and 65 Python templates
 - Curated problems with difficulty labels, notes, and direct LeetCode links
 - Search and solved/unsolved filters
 - Chapter-level and overall progress tracking
@@ -99,6 +100,10 @@ wrangler.jsonc          Local D1 migration configuration
 ## Customizing the study plan
 
 Edit `features/study-plan/data.ts` to add or change chapters and problems. Each problem includes its LeetCode ID, title, difficulty, URL slug, study note, and an optional memory cue.
+
+Edit `features/study-plan/reminders.js` to change the pre-problem algorithm
+refreshers, then run `npm run standalone:sync` to copy the same reference data
+into the standalone HTML file.
 
 If you change the database schema in `db/schema.ts`, generate and review a new migration:
 
